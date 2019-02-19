@@ -1,8 +1,8 @@
 TO = {
-    'abc123': 'nothe.me'
+    'abc123': 'http://nothe.me'
 }
 
 
 FROM = {
-    'abc123': 'nothe.me'
+    'abc123': 'http://nothe.me'
 }

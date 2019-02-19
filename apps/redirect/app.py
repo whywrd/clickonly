@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, make_response, render_template, url_for
+from flask import Flask, redirect, request, make_response, render_template
 import celery
 import psycopg2
 from datetime import datetime
@@ -31,11 +31,6 @@ def insert_db(location, history: list):
     db_conn.commit()
 
 
-@flask_app.route('/nope/<key>')
-def no_redirect(key):
-    return render_template('no_redirect.html', key=key)
-
-
 @flask_app.route('/<key>')
 def _redirect(key):
     if key in TO:
@@ -46,10 +41,10 @@ def _redirect(key):
         history.append(key)
         insert_db.delay(key, history)
 
-        resp = make_response(redirect('http://{}'.format(TO[key])))
+        resp = make_response(redirect(TO[key]))
         resp.set_cookie('history', json.dumps(history))
     else:
-        resp = make_response(redirect(url_for('no_redirect', key=key)))
+        resp = make_response(render_template('no_redirect.html', key=key))
     return resp
 
 
