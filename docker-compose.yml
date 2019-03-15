@@ -1,0 +1,21 @@
+version: '3'
+services:
+    rabbit:
+        image: rabbitmq:latest
+    postgres:
+        hostname: postgres
+        build:
+            context: ./db
+            dockerfile: Dockerfile
+    app:
+        build:
+            context: ./apps/redirect
+            dockerfile: Dockerfile
+        command: sh docker_start.sh
+        depends_on:
+            - rabbit
+            - postgres
+        ports:
+            - "8080:5000"
+        volumes:
+            - ./apps/redirect:/home/clickonly

@@ -7,8 +7,7 @@ itsdangerous==1.1.0
 Jinja2==2.10
 kombu==4.2.2.post1
 MarkupSafe==1.1.0
-psycopg2==2.7.7
 pytz==2018.9
 vine==1.2.0
 Werkzeug==0.14.1
-gunicorn==19.19.0
+gunicorn>=19,<20

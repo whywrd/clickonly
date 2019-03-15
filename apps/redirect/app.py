@@ -12,12 +12,13 @@ Parameters are forwarded on redirect, however the base URL needs to be resolved.
 """
 
 flask_app = Flask(__name__)
-celery_app = celery.Celery('app', broker='amqp://localhost')
+celery_app = celery.Celery('app', broker='amqp://guest:guest@rabbit:5672')
+# celery_app = celery.Celery('app', broker='amqp://guest:guest@localhost:5672')
 
 
 @celery.task
 def insert_db(location, history: list):
-    db_conn = psycopg2.connect(dbname='redirect_usage', user='will')
+    db_conn = psycopg2.connect("host=postgres dbname=clickonly user=clickonly password=AooQeTrYSRNpJvQ91q5LrRfD1R5OOphZ")
     cur = db_conn.cursor()
 
     cur.execute("""
@@ -31,11 +32,11 @@ def insert_db(location, history: list):
     db_conn.commit()
 
 
-@flask_app.route('/<key>')
+@flask_app.route('/r/<key>')
 def _redirect(key):
     if key in TO:
         try:
-            history = json.loads(request.cookies.get('history', []))
+            history = json.loads(request.cookies.get('history', '[]'))
         except json.JSONDecodeError:
             history = []
         history.append(key)
