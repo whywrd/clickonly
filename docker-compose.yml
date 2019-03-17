@@ -1,21 +1,38 @@
 version: '3'
 services:
-    rabbit:
-        image: rabbitmq:latest
-    postgres:
-        hostname: postgres
-        build:
-            context: ./db
-            dockerfile: Dockerfile
-    app:
-        build:
-            context: ./apps/redirect
-            dockerfile: Dockerfile
-        command: sh docker_start.sh
-        depends_on:
-            - rabbit
-            - postgres
-        ports:
-            - "8080:5000"
-        volumes:
-            - ./apps/redirect:/home/clickonly
+  nginx:
+    image: nginx:1.15-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencryp
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  redirect_mq:
+    image: rabbitmq:latest
+  redirect_db:
+    build:
+      context: ./db/redirect
+      dockerfile: Dockerfile
+    volumes:
+      - ./data/postgres_redirect:/var/lib/postgresql/data
+  redirect_app:
+    build:
+      context: ./apps/redirect
+      dockerfile: Dockerfile
+    command: sh docker_start.sh
+    depends_on:
+      - redirect_mq
+      - redirect_db
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./apps/redirect:/home/clickonly
+volumes:
+  redirect_db_vol:

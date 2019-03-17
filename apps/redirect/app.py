@@ -12,13 +12,13 @@ Parameters are forwarded on redirect, however the base URL needs to be resolved.
 """
 
 flask_app = Flask(__name__)
-celery_app = celery.Celery('app', broker='amqp://guest:guest@rabbit:5672')
+celery_app = celery.Celery('app', broker='amqp://guest:guest@redirect_mq:5672')
 # celery_app = celery.Celery('app', broker='amqp://guest:guest@localhost:5672')
 
 
 @celery.task
 def insert_db(location, history: list):
-    db_conn = psycopg2.connect("host=postgres dbname=clickonly user=clickonly password=AooQeTrYSRNpJvQ91q5LrRfD1R5OOphZ")
+    db_conn = psycopg2.connect("host=redirect_db dbname=clickonly user=clickonly password=AooQeTrYSRNpJvQ91q5LrRfD1R5OOphZ")
     cur = db_conn.cursor()
 
     cur.execute("""
