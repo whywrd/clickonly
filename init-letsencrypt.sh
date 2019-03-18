@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domains=(clickonly.us www.clickonly.us)
+domains=(clickonly.us)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="wkh019@gmail.com" # Adding a valid address is strongly recommended
