@@ -23,12 +23,14 @@ services:
   redirect_mq:
     image: rabbitmq:latest
   redirect_db:
+    env_file: ./redirect_db.env
     build:
       context: ./db/redirect
       dockerfile: Dockerfile
     volumes:
       - ./data/postgres_redirect:/var/lib/postgresql/data
   redirect_app:
+    env_file: ./redirect_db.env
     build:
       context: ./apps/redirect
       dockerfile: Dockerfile
