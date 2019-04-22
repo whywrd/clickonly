@@ -13,7 +13,7 @@ Parameters are forwarded on redirect, however the base URL needs to be resolved.
 """
 
 REDIRECT_DB_USERNAME = environ['REDIRECT_DB_USERNAME']
-REDIRECT_DB_PASSWORD = environ['REDIRECT_DB_USERNAME']
+REDIRECT_DB_PASSWORD = environ['REDIRECT_DB_PASSWORD']
 
 flask_app = Flask(__name__)
 celery_app = celery.Celery('app', broker='amqp://guest:guest@redirect_mq:5672')

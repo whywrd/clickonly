@@ -23,14 +23,18 @@ services:
   redirect_mq:
     image: rabbitmq:latest
   redirect_db:
-    env_file: ./redirect_db.env
     build:
+      args: 
+        - USERNAME=${REDIRECT_DB_USERNAME}
+        - PASSWORD=${REDIRECT_DB_PASSWORD}
       context: ./db/redirect
       dockerfile: Dockerfile
     volumes:
-      - ./data/postgres_redirect:/var/lib/postgresql/data
+      - ./data/postgres_redirect:/data/postgres_redirect
   redirect_app:
-    env_file: ./redirect_db.env
+    environment:
+      - REDIRECT_DB_USERNAME=${REDIRECT_DB_USERNAME}
+      - REDIRECT_DB_PASSWORD=${REDIRECT_DB_PASSWORD} 
     build:
       context: ./apps/redirect
       dockerfile: Dockerfile
