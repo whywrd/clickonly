@@ -57,5 +57,10 @@ def _redirect(key):
     return resp
 
 
+@flask_app.route('/')
+def root():
+    return render_template('root.html', to_table=TO)
+
+
 if __name__ == '__main__':
     flask_app.run('localhost', '8080')

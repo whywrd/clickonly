@@ -1,5 +1,6 @@
 TO = {
-    'abc123': 'http://nothe.me'
+    'abc123': 'http://nothe.me',
+    '2048': 'http://whywrd.com/2048'
 }
 
 
