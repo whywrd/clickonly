@@ -34,7 +34,8 @@ services:
   redirect_app:
     environment:
       - REDIRECT_DB_USERNAME=${REDIRECT_DB_USERNAME}
-      - REDIRECT_DB_PASSWORD=${REDIRECT_DB_PASSWORD} 
+      - REDIRECT_DB_PASSWORD=${REDIRECT_DB_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
     build:
       context: ./apps/redirect
       dockerfile: Dockerfile

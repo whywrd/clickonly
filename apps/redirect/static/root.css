@@ -1,0 +1,38 @@
+.body-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 600px) {
+  .body-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.logged-in-container {
+    text-align: right;
+    flex-grow: 1;
+}
+
+.login {
+    margin: 0px 0px 10px;
+}
+
+.route-container {
+    flex-grow: 3;
+}
+
+.route-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.del-route-button a:link {
+    color: red
+}
+
+.del-route-button a:hover, .del-route-button a:visited {
+    color: darkred
+}

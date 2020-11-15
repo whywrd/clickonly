@@ -4,3 +4,11 @@ CREATE TABLE redirects (
     location   varchar,
     history    varchar[]
 );
+
+
+CREATE TABLE location (
+    id         SERIAL PRIMARY KEY,
+    ts         integer,
+    location   char(255),
+    redirect   char(2000)
+)

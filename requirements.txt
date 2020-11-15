@@ -12,3 +12,5 @@ pytz==2018.9
 vine==1.2.0
 Werkzeug==0.14.1
 gunicorn==19
+requests
+flask-login

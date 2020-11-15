@@ -2,10 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='root.css') }}">
 </head>
 <body>
-    {% for k in to_table.keys() %}
-    <a href="/r/{{ k }}">drct.cc/r/{{ k }}</a><br>
-    {% endfor %}
+    <div class="body-container">
+        <div class="logged-in-container">
+            <div class="login">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}">logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}">login</a>
+                {% endif %}
+            </div>
+
+            {% if current_user.is_authenticated %}
+            <div class="add-route-form">
+                <form action="{{ url_for('submit_route') }}" method="POST">
+                    <div class="add-route-form-row">External URL <input type="text" name="redirect"/></div>
+                    <div class="add-route-form-row">drct Route <input type="text" name="location"/></div>
+                    <div class="add-route-form-submit"><input type="Submit" value="Add Route" /></div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="route-container">
+            <div class="routes">
+                {% for k in to_table.keys() %}
+                <div class="route-row">
+                    <div class="route">
+                        <a href="/r/{{ k }}">drct.cc/r/{{ k }}</a><br>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="del-route-button">
+                        <a href="/route/delete/{{ k }}">x</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>
