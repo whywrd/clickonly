@@ -11,6 +11,6 @@ psycopg2==2.7.7
 pytz==2018.9
 vine==1.2.0
 Werkzeug==0.14.1
-gunicorn==19
+gunicorn==19.5.0
 requests
 flask-login
